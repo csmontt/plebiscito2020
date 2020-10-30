@@ -5,7 +5,7 @@
 #' @param id_circ_elect id de circunscripción electoral
 #' @export
 #' @examples
-#' mesas_circ_electoral('elecciones_constitucion', 7479)
+#' resultado_mesa('elecciones_constitucion', 7479)
 #'
 
 resultado_mesa <- function(eleccion = "elecciones_constitucion",
