@@ -1,32 +1,18 @@
----
-title: "Introduccion"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Introduccion}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r, include = FALSE}
+## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
 
-```{r setup}
+## ----setup--------------------------------------------------------------------
 library(plebiscito2020)
 library(dplyr)
-```
 
-
-```{r}
+## -----------------------------------------------------------------------------
 circ_electoral_df <- circ_electoral("elecciones_constitucion")
 head(circ_electoral_df)
-```
 
-
-```{r}
+## -----------------------------------------------------------------------------
 mesas <- data.frame()
 for(i in 1:nrow(circ_electoral_df)){ 
              res <- mesas_circ_electoral("elecciones_constitucion",
@@ -34,39 +20,29 @@ for(i in 1:nrow(circ_electoral_df)){
              mesas <- bind_rows(mesas, res)
         }
 head(mesas)
-```
 
-```{r}
+## -----------------------------------------------------------------------------
 resultado_mesa("elecciones_constitucion", 71030001)
-```
 
-
-```{r}
+## -----------------------------------------------------------------------------
 resultado_mesa("elecciones_constitucion", 71030001)$data
-```
 
-```{r}
+## -----------------------------------------------------------------------------
 resultado_mesa("elecciones_constitucion", 71030001)$resumen
-```
 
-```{r}
+## -----------------------------------------------------------------------------
 resultado_mesa("elecciones_convencion", 71030001)$data
 resultado_mesa("elecciones_convencion", 71030001)$resumen
-```
 
-
-## Obtener el resultado de todas las mesas
-
-```{r}
+## -----------------------------------------------------------------------------
 sel_columnas <- function(resultado){
   sel <- resultado[, c("a","c")]
   names(sel) <- c("opcion", "votos")
   sel$votos <- as.numeric(sel$votos)
   return(sel)
 }
-```
 
-```{r}
+## -----------------------------------------------------------------------------
 id_mesas <- mesas$id_mesa[1:10]
 datos_mesas_con <-  data.frame()
 datos_mesas_con_val <-  data.frame()
@@ -97,9 +73,5 @@ resultados <- list(apruebo_rechazo = datos_mesas_con,
                    tipo_organo_val = datos_mesas_org_val)
 
 resultados$apruebo_rechazo
-resultados$apruebp_rechazo_val
-
-```
 
 
-### merge mesas con el resto de los niveles hasta tener las mesas por region!
