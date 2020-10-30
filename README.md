@@ -1,6 +1,6 @@
 # plebiscito2020
 
-library(devtools)
+`library(devtools)`
 
-install_github("csmontt/plebiscito2020")
+`install_github("csmontt/plebiscito2020")`
 
