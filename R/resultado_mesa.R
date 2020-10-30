@@ -11,8 +11,7 @@
 resultado_mesa <- function(eleccion = "elecciones_constitucion",
                            id_mesa = "70071112"){
                   url = paste0("http://servelelecciones.cl/data/",
-                        eleccion, "/computomesas/",
-                        id_mesa,".json")
+                        eleccion, "/computomesas/",id_mesa,".json")
                   resultado = obtener_json(url)
                   resultado
 }
