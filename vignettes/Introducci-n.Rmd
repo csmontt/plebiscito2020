@@ -21,12 +21,35 @@ library(plebiscito2020)
 library(dplyr)
 ```
 
-# 
+# Accediendo a los datos
 
 ```{r}
-m
+head(constitucion)
 ```
 
+## Agregación datos usando `dplyr`
+```{r}
+constitucion %>% group_by(opcion) %>% summarize(total_votos = sum(votos, na.rm = TRUE))
+```
+
+```{r}
+constitucion %>% group_by(nombre_comuna, opcion) %>% summarize(total_votos = sum(votos, na.rm = TRUE))
+```
+
+```{r}
+head(tipo_de_organo)
+```
+
+
+```{r}
+tipo_de_organo %>% group_by(opcion) %>% summarize(total_votos = sum(votos, na.rm = TRUE))
+```
+
+```{r}
+tipo_de_organo %>% group_by(nombre_comuna, opcion) %>% summarize(total_votos = sum(votos, na.rm = TRUE))
+```
+
+### Construyendo la base de datos 
 
 ```{r}
 circ_electoral_df <- circ_electoral("elecciones_constitucion")
@@ -35,13 +58,13 @@ head(circ_electoral_df)
 
 
 ```{r}
-mesas <- data.frame()
+mesas_df <- data.frame()
 for(i in 1:nrow(circ_electoral_df)){ 
              res <- mesas_circ_electoral("elecciones_constitucion",
-                                         circ_electoral_df[i,"id_circ"])
-             mesas <- bind_rows(mesas, res)
+                                       circ_electoral_df[i,"id_circ_electoral"])
+             mesas_df <- bind_rows(mesas_df, res)
         }
-head(mesas)
+head(mesas_df)
 ```
 
 ```{r}
@@ -80,7 +103,7 @@ datos_mesas_con <-  data.frame()
 datos_mesas_con_val <-  data.frame()
 datos_mesas_org <-  data.frame()
 datos_mesas_org_val <-  data.frame()
-for(i in 1:length(id_mesas)){  
+for(i in 1:5){   #solo las 5 priemras mesas
   mesa <- id_mesas[i]
   res_mesa  <- sel_columnas(resultado_mesa("elecciones_constitucion", mesa)$data)
   res_mesa <- cbind(id_mesa = mesa, res_mesa)
@@ -106,6 +129,8 @@ resultados <- list(apruebo_rechazo = datos_mesas_con,
 
 resultados$apruebo_rechazo
 resultados$apruebp_rechazo_val
+resultados$tipo_organo
+resultados$tipo_organo_val
 
 ```
 

@@ -12,26 +12,144 @@ library(dplyr)
 #>     intersect, setdiff, setequal, union
 ```
 
+Accediendo a los datos
+======================
+
 ``` r
-circ_electoral_df <- circ_electoral("elecciones_constitucion")
-head(circ_electoral_df)
-#>   id_circ circ_electoral
-#> 1    7103     AGUA SANTA
-#> 2    7491          AISEN
-#> 3    7140        ALAMEDA
-#> 4    7610         ALERCE
-#> 5    7122      ALGARROBO
-#> 6    7218          ALHUE
+head(constitucion)
+#>   id_region         nombre_region id_comuna nombre_comuna id_circ_electoral
+#> 1      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 2      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 3      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 4      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 5      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 6      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#>   nombre_circ_electoral id_local     nombre_local  id_mesa nombre_mesa  opcion
+#> 1                 ARICA     2985 COLEGIO DEL ALBA 70011235   235V-236V Apruebo
+#> 2                 ARICA     2985 COLEGIO DEL ALBA 70011235   235V-236V Rechazo
+#> 3                 ARICA     2985 COLEGIO DEL ALBA 70011237   237V-238V Apruebo
+#> 4                 ARICA     2985 COLEGIO DEL ALBA 70011237   237V-238V Rechazo
+#> 5                 ARICA     2985 COLEGIO DEL ALBA 70011239   239V-240V Apruebo
+#> 6                 ARICA     2985 COLEGIO DEL ALBA 70011239   239V-240V Rechazo
+#>   votos
+#> 1   141
+#> 2    37
+#> 3   147
+#> 4    40
+#> 5   146
+#> 6    42
+```
+
+Agregación datos usando `dplyr`
+-------------------------------
+
+``` r
+constitucion %>% group_by(opcion) %>% summarize(total_votos = sum(votos, na.rm = TRUE))
+#> `summarise()` ungrouping output (override with `.groups` argument)
+#> # A tibble: 2 x 2
+#>   opcion  total_votos
+#>   <chr>         <dbl>
+#> 1 Apruebo     5861090
+#> 2 Rechazo     1628609
 ```
 
 ``` r
-mesas <- data.frame()
+constitucion %>% group_by(nombre_comuna, opcion) %>% summarize(total_votos = sum(votos, na.rm = TRUE))
+#> `summarise()` regrouping output by 'nombre_comuna' (override with `.groups` argument)
+#> # A tibble: 692 x 3
+#> # Groups:   nombre_comuna [346]
+#>    nombre_comuna   opcion  total_votos
+#>    <chr>           <chr>         <dbl>
+#>  1 ALGARROBO       Apruebo        4932
+#>  2 ALGARROBO       Rechazo        2118
+#>  3 ALHUE           Apruebo        2323
+#>  4 ALHUE           Rechazo         309
+#>  5 ALTO BIOBIO     Apruebo        1269
+#>  6 ALTO BIOBIO     Rechazo         424
+#>  7 ALTO DEL CARMEN Apruebo        1559
+#>  8 ALTO DEL CARMEN Rechazo         241
+#>  9 ALTO HOSPICIO   Apruebo       21373
+#> 10 ALTO HOSPICIO   Rechazo        4608
+#> # ... with 682 more rows
+```
+
+``` r
+head(tipo_de_organo)
+#>   id_region         nombre_region id_comuna nombre_comuna id_circ_electoral
+#> 1      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 2      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 3      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 4      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 5      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#> 6      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
+#>   nombre_circ_electoral id_local     nombre_local  id_mesa nombre_mesa
+#> 1                 ARICA     2985 COLEGIO DEL ALBA 70011235   235V-236V
+#> 2                 ARICA     2985 COLEGIO DEL ALBA 70011235   235V-236V
+#> 3                 ARICA     2985 COLEGIO DEL ALBA 70011237   237V-238V
+#> 4                 ARICA     2985 COLEGIO DEL ALBA 70011237   237V-238V
+#> 5                 ARICA     2985 COLEGIO DEL ALBA 70011239   239V-240V
+#> 6                 ARICA     2985 COLEGIO DEL ALBA 70011239   239V-240V
+#>                            opcion votos
+#> 1 Convención Mixta Constitucional    28
+#> 2       Convención Constitucional   141
+#> 3 Convención Mixta Constitucional    36
+#> 4       Convención Constitucional   142
+#> 5 Convención Mixta Constitucional    30
+#> 6       Convención Constitucional   139
+```
+
+``` r
+tipo_de_organo %>% group_by(opcion) %>% summarize(total_votos = sum(votos, na.rm = TRUE))
+#> `summarise()` ungrouping output (override with `.groups` argument)
+#> # A tibble: 2 x 2
+#>   opcion                          total_votos
+#>   <chr>                                 <dbl>
+#> 1 Convención Constitucional           5621836
+#> 2 Convención Mixta Constitucional     1496492
+```
+
+``` r
+tipo_de_organo %>% group_by(nombre_comuna, opcion) %>% summarize(total_votos = sum(votos, na.rm = TRUE))
+#> `summarise()` regrouping output by 'nombre_comuna' (override with `.groups` argument)
+#> # A tibble: 692 x 3
+#> # Groups:   nombre_comuna [346]
+#>    nombre_comuna   opcion                          total_votos
+#>    <chr>           <chr>                                 <dbl>
+#>  1 ALGARROBO       Convención Constitucional              4754
+#>  2 ALGARROBO       Convención Mixta Constitucional        1856
+#>  3 ALHUE           Convención Constitucional              2158
+#>  4 ALHUE           Convención Mixta Constitucional         406
+#>  5 ALTO BIOBIO     Convención Constitucional              1131
+#>  6 ALTO BIOBIO     Convención Mixta Constitucional         424
+#>  7 ALTO DEL CARMEN Convención Constitucional              1465
+#>  8 ALTO DEL CARMEN Convención Mixta Constitucional         278
+#>  9 ALTO HOSPICIO   Convención Constitucional             20247
+#> 10 ALTO HOSPICIO   Convención Mixta Constitucional        4663
+#> # ... with 682 more rows
+```
+
+### Construyendo la base de datos
+
+``` r
+circ_electoral_df <- circ_electoral("elecciones_constitucion")
+head(circ_electoral_df)
+#>   id_circ_electoral nombre_circ_electoral
+#> 1              7103            AGUA SANTA
+#> 2              7491                 AISEN
+#> 3              7140               ALAMEDA
+#> 4              7610                ALERCE
+#> 5              7122             ALGARROBO
+#> 6              7218                 ALHUE
+```
+
+``` r
+mesas_df <- data.frame()
 for(i in 1:nrow(circ_electoral_df)){ 
              res <- mesas_circ_electoral("elecciones_constitucion",
-                                         circ_electoral_df[i,"id_circ"])
-             mesas <- bind_rows(mesas, res)
+                                       circ_electoral_df[i,"id_circ_electoral"])
+             mesas_df <- bind_rows(mesas_df, res)
         }
-head(mesas)
+head(mesas_df)
 #>    id_mesa mesa
 #> 1 71030001   1M
 #> 2 71030002   2M
@@ -191,12 +309,12 @@ sel_columnas <- function(resultado){
 ```
 
 ``` r
-id_mesas <- mesas$id_mesa[1:10]
+id_mesas <- mesas$id_mesa
 datos_mesas_con <-  data.frame()
 datos_mesas_con_val <-  data.frame()
 datos_mesas_org <-  data.frame()
 datos_mesas_org_val <-  data.frame()
-for(i in 1:length(id_mesas)){  
+for(i in 1:5){   #solo las 5 priemras mesas
   mesa <- id_mesas[i]
   res_mesa  <- sel_columnas(resultado_mesa("elecciones_constitucion", mesa)$data)
   res_mesa <- cbind(id_mesa = mesa, res_mesa)
@@ -222,68 +340,70 @@ resultados <- list(apruebo_rechazo = datos_mesas_con,
 
 resultados$apruebo_rechazo
 #>     id_mesa  opcion votos
-#> 1  71030001 Apruebo    73
-#> 2  71030001 Rechazo    43
-#> 3  71030002 Apruebo    64
-#> 4  71030002 Rechazo    43
-#> 5  71030003 Apruebo    76
-#> 6  71030003 Rechazo    40
-#> 7  71030004 Apruebo    81
-#> 8  71030004 Rechazo    36
-#> 9  71030005 Apruebo    93
-#> 10 71030005 Rechazo    43
-#> 11 71030006 Apruebo    89
-#> 12 71030006 Rechazo    59
-#> 13 71030007 Apruebo    96
-#> 14 71030007 Rechazo    49
-#> 15 71030008 Apruebo    92
-#> 16 71030008 Rechazo    52
-#> 17 71030009 Apruebo   116
-#> 18 71030009 Rechazo    37
-#> 19 71030010 Apruebo   110
-#> 20 71030010 Rechazo    37
+#> 1  70011235 Apruebo   141
+#> 2  70011235 Rechazo    37
+#> 3  70011237 Apruebo   147
+#> 4  70011237 Rechazo    40
+#> 5  70011239 Apruebo   146
+#> 6  70011239 Rechazo    42
+#> 7  70011241 Apruebo   132
+#> 8  70011241 Rechazo    57
+#> 9  70011243 Apruebo   139
+#> 10 70011243 Rechazo    47
 resultados$apruebp_rechazo_val
 #>     id_mesa               opcion votos
-#> 1  71030001 Válidamente Emitidos   116
-#> 2  71030001          Votos Nulos     0
-#> 3  71030001      Votos en Blanco     0
-#> 4  71030001       Total Votación   116
-#> 5  71030002 Válidamente Emitidos   107
-#> 6  71030002          Votos Nulos     0
-#> 7  71030002      Votos en Blanco     0
-#> 8  71030002       Total Votación   107
-#> 9  71030003 Válidamente Emitidos   116
-#> 10 71030003          Votos Nulos     1
-#> 11 71030003      Votos en Blanco     0
-#> 12 71030003       Total Votación   117
-#> 13 71030004 Válidamente Emitidos   117
-#> 14 71030004          Votos Nulos     1
-#> 15 71030004      Votos en Blanco     0
-#> 16 71030004       Total Votación   118
-#> 17 71030005 Válidamente Emitidos   136
-#> 18 71030005          Votos Nulos    NA
-#> 19 71030005      Votos en Blanco    NA
-#> 20 71030005       Total Votación   136
-#> 21 71030006 Válidamente Emitidos   148
-#> 22 71030006          Votos Nulos     1
-#> 23 71030006      Votos en Blanco     0
-#> 24 71030006       Total Votación   149
-#> 25 71030007 Válidamente Emitidos   145
-#> 26 71030007          Votos Nulos     0
-#> 27 71030007      Votos en Blanco     0
-#> 28 71030007       Total Votación   145
-#> 29 71030008 Válidamente Emitidos   144
-#> 30 71030008          Votos Nulos     2
-#> 31 71030008      Votos en Blanco     0
-#> 32 71030008       Total Votación   146
-#> 33 71030009 Válidamente Emitidos   153
-#> 34 71030009          Votos Nulos     0
-#> 35 71030009      Votos en Blanco     0
-#> 36 71030009       Total Votación   153
-#> 37 71030010 Válidamente Emitidos   147
-#> 38 71030010          Votos Nulos     0
-#> 39 71030010      Votos en Blanco     0
-#> 40 71030010       Total Votación   147
+#> 1  70011235 Válidamente Emitidos   178
+#> 2  70011235          Votos Nulos     1
+#> 3  70011235      Votos en Blanco    NA
+#> 4  70011235       Total Votación   179
+#> 5  70011237 Válidamente Emitidos   187
+#> 6  70011237          Votos Nulos     1
+#> 7  70011237      Votos en Blanco     0
+#> 8  70011237       Total Votación   188
+#> 9  70011239 Válidamente Emitidos   188
+#> 10 70011239          Votos Nulos     0
+#> 11 70011239      Votos en Blanco     0
+#> 12 70011239       Total Votación   188
+#> 13 70011241 Válidamente Emitidos   189
+#> 14 70011241          Votos Nulos     2
+#> 15 70011241      Votos en Blanco    NA
+#> 16 70011241       Total Votación   191
+#> 17 70011243 Válidamente Emitidos   186
+#> 18 70011243          Votos Nulos     2
+#> 19 70011243      Votos en Blanco     0
+#> 20 70011243       Total Votación   188
+resultados$tipo_organo
+#>     id_mesa                          opcion votos
+#> 1  70011235 Convención Mixta Constitucional    28
+#> 2  70011235       Convención Constitucional   141
+#> 3  70011237 Convención Mixta Constitucional    36
+#> 4  70011237       Convención Constitucional   142
+#> 5  70011239 Convención Mixta Constitucional    30
+#> 6  70011239       Convención Constitucional   139
+#> 7  70011241 Convención Mixta Constitucional    38
+#> 8  70011241       Convención Constitucional   134
+#> 9  70011243 Convención Mixta Constitucional    38
+#> 10 70011243       Convención Constitucional   137
+resultados$tipo_organo_val
+#>     id_mesa               opcion votos
+#> 1  70011235 Válidamente Emitidos   169
+#> 2  70011235          Votos Nulos     6
+#> 3  70011235      Votos en Blanco     4
+#> 4  70011235       Total Votación   179
+#> 5  70011237 Válidamente Emitidos   178
+#> 6  70011237          Votos Nulos     8
+#> 7  70011237      Votos en Blanco     2
+#> 8  70011237       Total Votación   188
+#> 9  70011239 Válidamente Emitidos   169
+#> 10 70011239          Votos Nulos    17
+#> 11 70011239      Votos en Blanco     2
+#> 12 70011239       Total Votación   188
+#> 13 70011241 Válidamente Emitidos   172
+#> 14 70011241          Votos Nulos    14
+#> 15 70011241      Votos en Blanco     5
+#> 16 70011241       Total Votación   191
+#> 17 70011243 Válidamente Emitidos   175
+#> 18 70011243          Votos Nulos    12
+#> 19 70011243      Votos en Blanco     1
+#> 20 70011243       Total Votación   188
 ```
-
-### merge mesas con el resto de los niveles hasta tener las mesas por region!
