@@ -1,3 +1,6 @@
+Accediendo a los datos
+======================
+
 ``` r
 library(plebiscito2020)
 library(dplyr)
@@ -10,12 +13,6 @@ library(dplyr)
 #> The following objects are masked from 'package:base':
 #> 
 #>     intersect, setdiff, setequal, union
-```
-
-Accediendo a los datos
-======================
-
-``` r
 head(constitucion)
 #>   id_region         nombre_region id_comuna nombre_comuna id_circ_electoral
 #> 1      3015 DE ARICA Y PARINACOTA      2822         ARICA              7001
