@@ -69,7 +69,7 @@ sel_columnas <- function(resultado){
 ```
 
 ```{r}
-id_mesas <- mesas$id_mesa[1:10]
+id_mesas <- mesas$id_mesa
 datos_mesas_con <-  data.frame()
 datos_mesas_con_val <-  data.frame()
 datos_mesas_org <-  data.frame()
@@ -103,5 +103,3 @@ resultados$apruebp_rechazo_val
 
 ```
 
-
-### merge mesas con el resto de los niveles hasta tener las mesas por region!
