@@ -1,6 +1,6 @@
 # Acerca de
 
-Funciones para obtener datos desde www.sevelelecciones.cl a nivel de mesas de votación.
+Funciones para obtener datos desde www.servelelecciones.cl a nivel de mesas de votación.
 
 # Instalación
 
