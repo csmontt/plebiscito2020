@@ -14,4 +14,3 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-LazyData: true
