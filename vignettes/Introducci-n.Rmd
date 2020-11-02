@@ -21,6 +21,12 @@ library(plebiscito2020)
 library(dplyr)
 ```
 
+# 
+
+```{r}
+m
+```
+
 
 ```{r}
 circ_electoral_df <- circ_electoral("elecciones_constitucion")
