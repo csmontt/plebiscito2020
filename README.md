@@ -10,5 +10,5 @@ Funciones para obtener datos desde www.sevelelecciones.cl a nivel de mesas de vo
 
 # Ejemplos
 
-En carpeta vigenttes hay ejemplos de como usar las funcioens y acceder a los datos.
+En carpeta vignettes hay ejemplos de como usar las funciones y acceder a los datos.
 
