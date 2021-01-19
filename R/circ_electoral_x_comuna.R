@@ -10,7 +10,7 @@
 
 circ_electoral_x_comuna <- function(eleccion = "elecciones_constitucion",
                            id_comuna = 2637){
-                  url = paste0("http://servelelecciones.cl/data/",
+                  url = paste0("http://pv.servelelecciones.cl/data/",
                         eleccion, "/filters/circ_electoral/bycomuna/",
                         id_comuna,".json")
                   resultado = obtener_json(url)
