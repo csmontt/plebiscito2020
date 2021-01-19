@@ -9,7 +9,7 @@
 
 mesas_x_locales <- function(eleccion = "elecciones_constitucion",
                            id_local = 2987){
-                  url = paste0("http://servelelecciones.cl/data/",
+                  url = paste0("http://pv.servelelecciones.cl/data/",
                         eleccion, "/filters/mesas/bylocales/",
                         id_local,".json")
                   resultado = obtener_json(url)#[,c(1,3)]
