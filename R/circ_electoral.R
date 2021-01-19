@@ -8,7 +8,7 @@
 
 
 circ_electoral <- function(eleccion = "elecciones_constitucion"){
-        url = paste0("http://servelelecciones.cl/data/",
+        url = paste0("http://pv.servelelecciones.cl/data/",
                         eleccion, "/filters/",
                         "circ_electoral","/allchile.json")
         resultado = obtener_json(url)
