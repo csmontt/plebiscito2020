@@ -6,7 +6,7 @@
 #' regiones('elecciones_constitucion')
 
 regiones <- function(eleccion = "elecciones_constitucion"){
-        url = paste0("http://servelelecciones.cl/data/",
+        url = paste0("http://pv.servelelecciones.cl/data/",
                         eleccion, "/filters/",
                         "regiones","/all.json")
         resultado = obtener_json(url)
