@@ -9,7 +9,7 @@
 
 comunas_x_region <- function(eleccion = "elecciones_constitucion",
                            id_region = 3015){
-                  url = paste0("http://servelelecciones.cl/data/",
+                  url = paste0("http://pv.servelelecciones.cl/data/",
                         eleccion, "/filters/comunas/byregion/",id_region,".json")
                   resultado = obtener_json(url)
                   names(resultado) <- c("id_comuna", "nombre_comuna")
